@@ -24,11 +24,14 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void deleteCategory(Long categoryId) {
+    public String deleteCategory(Long categoryId) {
         Category category = categories.stream()
                 .filter(c -> c.getCategoryId().equals(categoryId))
-                .findFirst()
-                .get();
+                .findFirst().orElse(null);
+        if (category == null)
+            return "Category not Found";
+
         categories.remove(category);
+        return "Category Deleted Successfully";
     }
 }
